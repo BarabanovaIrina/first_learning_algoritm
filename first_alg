@@ -1,0 +1,36 @@
+import numpy as np
+import pandas as pd
+
+# e = pd.DataFrame({'yellowness' : [1,0.4,0.7],'symmetry':[0.3,0.5,0.8]})
+# print()
+# yellowness = pd.Series([1.0,0.4,0.7])
+# symmetry = pd.Series([0.3,0.5,0.8])
+examples = pd.DataFrame({'0':[1,1,1], '1': [1.0,0.4,0.7], '2': [0.3,0.5,0.8]})
+w = pd.Series([0,0,0])
+
+def Target(ex):
+    if ex[1] == 1.0 and ex[2] == 0.3:
+        return 1
+    if ex[1] == 0.4 and ex[2] == 0.5:
+        return 1
+    if ex[1] == 0.7 and ex[2] == 0.8:
+        return 0
+    
+def Predict(ex, w):
+    if sum(ex*w)>0:
+        return 1
+    else:
+        return 0
+
+perfect = False
+while not perfect:
+    perfect = True
+    for e in examples.values:
+        print(e)
+        if Predict(e,w)!=Target(e):
+            if Predict(e,w)==0:
+                w = w + e
+            else:
+                w = w - e
+        print(w)
+print(w)
